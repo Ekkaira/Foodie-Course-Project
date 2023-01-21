@@ -185,7 +185,7 @@ window.addEventListener("DOMContentLoaded", function () {
     "img/tabs/vegy.jpg",
     "vegy",
     'Menu "Fit"',
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.!",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     9,
     ".menu .container"
   ).render();
@@ -194,7 +194,7 @@ window.addEventListener("DOMContentLoaded", function () {
     "img/tabs/post.jpg",
     "post",
     'Menu "Lenten"',
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.!",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     14,
     ".menu .container"
   ).render();
@@ -202,8 +202,8 @@ window.addEventListener("DOMContentLoaded", function () {
   new MenuCard(
     "img/tabs/elite.jpg",
     "elite",
-    "Menu “Premium”",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua!",
+    'Menu Premium"',
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
     21,
     ".menu .container"
   ).render();
@@ -264,6 +264,8 @@ window.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Dialog modal window
+
   function showThanksModal(message) {
     const prevModalDialog = document.querySelector(".modal__dialog");
 
@@ -286,4 +288,8 @@ window.addEventListener("DOMContentLoaded", function () {
       closeModal();
     }, 4000);
   }
+
+  fetch(" http://localhost:3000/menu")
+    .then((data) => data.json())
+    .then((res) => console.log(res));
 });

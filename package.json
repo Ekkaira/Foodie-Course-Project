@@ -1,0 +1,22 @@
+{
+  "name": "food-delivery",
+  "version": "1.0.0",
+  "description": "course practice food delivery website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ekkaira/Foodie-Course-Project.git"
+  },
+  "author": "Denys Chebotar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ekkaira/Foodie-Course-Project/issues"
+  },
+  "homepage": "https://github.com/Ekkaira/Foodie-Course-Project#readme",
+  "devDependencies": {
+    "json-server": "^0.17.1"
+  }
+}
