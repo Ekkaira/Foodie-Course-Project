@@ -181,32 +181,28 @@ window.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  new MenuCard(
-    "img/tabs/vegy.jpg",
-    "vegy",
-    'Menu "Fit"',
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    9,
-    ".menu .container"
-  ).render();
+  const getResource = async (url) => {
+    const result = await fetch(url);
 
-  new MenuCard(
-    "img/tabs/post.jpg",
-    "post",
-    'Menu "Lenten"',
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    14,
-    ".menu .container"
-  ).render();
+    if (!result.ok) {
+      throw new Error(`Could not fetch ${url}, status: ${result.status}`);
+    }
 
-  new MenuCard(
-    "img/tabs/elite.jpg",
-    "elite",
-    'Menu Premium"',
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-    21,
-    ".menu .container"
-  ).render();
+    return await result.json();
+  };
+
+  getResource("http://localhost:3000/menu").then((data) => {
+    data.forEach(({ img, altimg, title, descr, price }) => {
+      new MenuCard(
+        img,
+        altimg,
+        title,
+        descr,
+        price,
+        ".menu .container"
+      ).render();
+    });
+  });
 
   // Forms logic
 
@@ -218,10 +214,22 @@ window.addEventListener("DOMContentLoaded", function () {
   };
 
   forms.forEach((item) => {
-    postData(item);
+    bindPostData(item);
   });
 
-  function postData(form) {
+  const postData = async (url, data) => {
+    const result = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=utf-8",
+      },
+      body: data,
+    });
+
+    return await result.json();
+  };
+
+  function bindPostData(form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -235,21 +243,11 @@ window.addEventListener("DOMContentLoaded", function () {
 
       const formData = new FormData(form);
 
-      const object = {};
-      formData.forEach(function (value, key) {
-        object[key] = value;
-      });
+      const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
 
       // Fetch JSON data
 
-      fetch("server.php", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(object),
-      })
-        .then((data) => data.text())
+      postData("http://localhost:3000/requests", jsonData)
         .then((data) => {
           console.log(data);
           showThanksModal(message.success);
